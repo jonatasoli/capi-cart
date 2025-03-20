@@ -1,0 +1,66 @@
+[project]
+name = "capicart"
+version = "0.1.0"
+description = "E-commerce open source in python and Svelte."
+authors = [
+    {name = "Jonatas Oliveira",email = "contact@jonatasoliveira.dev"}
+]
+license = {text = "AGPL-3.0"}
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "towncrier (>=24.8.0,<25.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.towncrier]
+directory = "changelog.d"
+filename = "CHANGELOG.md"
+start_string = "<!-- release notes start -->\n"
+underlines = ["", "", ""]
+title_format = "## [{version}](https://github.com/twisted/my-project/tree/{version}) - {project_date}"
+issue_format = "[#{issue}](https://github.com/twisted/my-project/issues/{issue})"
+
+[[tool.towncrier.type]]
+directory = "security"
+name = "Security"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "removed"
+name = "Removed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "deprecated"
+name = "Deprecated"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "added"
+name = "Added"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "changed"
+name = "Changed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "fixed"
+name = "Fixed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "build"
+name = "Build"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "doc"
+name = "Doc"
+showcontent = true

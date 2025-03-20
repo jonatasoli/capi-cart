@@ -1,0 +1,45 @@
+services:
+
+
+  postgres:
+    image: "postgres:17"
+    container_name: ecommercedb
+    ports:
+      - 5432:5432
+    expose:
+      - "5432"
+    volumes:
+      - pg14:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres_user
+      POSTGRES_PASSWORD: pass123
+      POSTGRES_DB: ecommerce
+
+    restart: on-failure
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -d $POSTGRES_DB -U $POSTGRES_USER"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  redis:
+    image: redis:8.0-M04
+    ports:
+      - 6379:6379
+
+  rabbitmq:
+    image: rabbitmq
+    container_name: broker
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBIT_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+
+volumes:
+  pg14:
+  redis-v:
+

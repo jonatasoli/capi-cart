@@ -1,5 +1,50 @@
 services:
 
+  api:
+    build: ./back
+    ports:
+      - 8001:8001
+    expose:
+      - 8001
+    environment:
+      DYNACONF_DATABASE_URL: "postgresql+psycopg://postgres_user:pass123@postgres/ecommerce"
+      DYNACONF_DATABASE_URI: "postgresql+asyncpg://postgres_user:pass123@postgres/ecommerce"
+      DYNACONF_BROKER_URL: "amqp://guest:guest@rabbitmq:5672//"
+      DYNACONF_REDIS_DB: 0
+      DYNACONF_REDIS_URL: redis://:@redis:6379
+      DYNACONF_ACCESS_TOKEN_EXPIRE_MINUTES: 90
+      DYNACONF_ADMIN_URL: https://demo.admin.example.com
+      DYNACONF_API_MAIL_URL: https://testapi.com/
+      DYNACONF_AWS_ACCESS_KEY_ID: "xxxxxxx"
+      DYNACONF_AWS_SECRET_ACCESS_KEY: "xxxxxx"
+      DYNACONF_BUCKET_NAME: cdn.example.com
+      DYNACONF_COMPANY: Capivara
+      DYNACONF_CORREIOSBR_API_SECRET: "xxxxxxx"
+      DYNACONF_CORREIOSBR_CEP_ORIGIN: 1000000
+      DYNACONF_CORREIOSBR_PASS: usercorreios
+      DYNACONF_CORREIOSBR_POSTAL_CART: 000011111
+      DYNACONF_CORREIOSBR_USER: "111111gr."
+      DYNACONF_CORREIOSBR_API_URL: "https://api.correios.com.br"
+      DYNACONF_EMAIL_FROM: contact@jonatasoliveira.dev
+      DYNACONF_ENDPOINT_UPLOAD_CLIENT: https://s3.us-east-2.wasabisys.com/
+      DYNACONF_ENDPOINT_UPLOAD_REGION: us-east-2
+      DYNACONF_ENVIRONMENT: development
+      DYNACONF_FILE_UPLOAD_CLIENT: WASABI
+      DYNACONF_FILE_UPLOAD_PATH: https://cdn.example.com/
+      DYNACONF_FRONTEND_URL: https://demo.capicart.com
+      DYNACONF_FRONTEND_URLS: https://demo.capicart.com
+      DYNACONF_GATEWAY_API: API_KEY
+      DYNACONF_GATEWAY_CRYP: CRYP_KEY
+      DYNACONF_MERCADO_PAGO_ACCESS_TOKEN: PROD-xxx-xxxx-xxx-xxxx
+      DYNACONF_MERCADO_PAGO_PUBLIC_KEY: PROD-xxxxx-xxx-xx-xx-xxxx
+      DYNACONF_MERCADO_PAGO_URL: https://api.mercadopago.com
+      DYNACONF_PAYMENT_GATEWAY_URL: URL_GATEWAY
+      DYNACONF_RESULT_BACKEND: rpc://
+      DYNACONF_SENDGRID_API_KEY: "SG.xxx.xxxw-xxxxx"
+      DYNACONF_STRIPE_API_KEY: "pk_xxxxxxxl"
+      DYNACONF_STRIPE_SECRET_KEY: "sk_xxxxxxxxxx"
+    restart: on-failure
+    entrypoint: ["uv", "run", "uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "8001"]
 
   postgres:
     image: "postgres:17"
@@ -9,7 +54,7 @@ services:
     expose:
       - "5432"
     volumes:
-      - pg14:/var/lib/postgresql/data
+      - pg17:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: postgres_user
       POSTGRES_PASSWORD: pass123
@@ -40,6 +85,6 @@ services:
       - "5672:5672"
 
 volumes:
-  pg14:
+  pg17:
   redis-v:
 

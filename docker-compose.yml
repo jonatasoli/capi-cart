@@ -1,5 +1,7 @@
 services:
 
+  front:
+
   api:
     build: ./back
     ports:
@@ -43,6 +45,7 @@ services:
       DYNACONF_SENDGRID_API_KEY: "SG.xxx.xxxw-xxxxx"
       DYNACONF_STRIPE_API_KEY: "pk_xxxxxxxl"
       DYNACONF_STRIPE_SECRET_KEY: "sk_xxxxxxxxxx"
+      DYNACONF_CAPI_SECRET: "RVd9r6ly08gbPMGi1EWbB_BWPKzd2n_uriOIipxDN70="
     restart: on-failure
     entrypoint: ["uv", "run", "uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "8001"]
 

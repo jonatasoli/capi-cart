@@ -1,6 +1,48 @@
+version: "3.9"
 services:
-
   front:
+    build:
+      context: ./front-shopping
+      args:
+        - VITE_URL_LOGO=${VITE_URL_LOGO}
+        - VITE_SERVER_BASE_URL=${VITE_SERVER_BASE_URL}
+        - VITE_MERCADO_PAGO_PUBLIC_KEY=${VITE_MERCADO_PAGO_PUBLIC_KEY}
+        - VITE_MERCADO_PAGO_ACCESS_TOKEN=${VITE_MERCADO_PAGO_ACCESS_TOKEN}
+        - VITE_STRIPE_SECRET_KEY=${VITE_STRIPE_SECRET_KEY}
+    ports:
+      - "5173:5173"
+    env_file:
+      - .env
+    environment:
+      - VITE_URL_LOGO=${VITE_URL_LOGO}
+      - VITE_SERVER_BASE_URL=${VITE_SERVER_BASE_URL}
+      - VITE_MERCADO_PAGO_PUBLIC_KEY=${VITE_MERCADO_PAGO_PUBLIC_KEY}
+      - VITE_MERCADO_PAGO_ACCESS_TOKEN=${VITE_MERCADO_PAGO_ACCESS_TOKEN}
+      - VITE_STRIPE_SECRET_KEY=${VITE_STRIPE_SECRET_KEY}
+    depends_on:
+      - api
+    restart: always
+    networks:
+      - default
+
+  admin:
+    build:
+      context: ./admin
+      args:
+        - SERVER_BASE_URL=${SERVER_BASE_URL}
+        - PUBLIC_SERVER_BASE_URL=${PUBLIC_SERVER_BASE_URL}
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      - SERVER_BASE_URL=${SERVER_BASE_URL}
+      - PUBLIC_SERVER_BASE_URL=${PUBLIC_SERVER_BASE_URL}
+    depends_on:
+      - api
+    restart: always
+    networks:
+      - default
 
   api:
     build: ./back
@@ -47,7 +89,18 @@ services:
       DYNACONF_STRIPE_SECRET_KEY: "sk_xxxxxxxxxx"
       DYNACONF_CAPI_SECRET: "RVd9r6ly08gbPMGi1EWbB_BWPKzd2n_uriOIipxDN70="
     restart: on-failure
-    entrypoint: ["uv", "run", "uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "8001"]
+    entrypoint:
+      [
+        "uv",
+        "run",
+        "uvicorn",
+        "main:app",
+        "--reload",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8001",
+      ]
 
   postgres:
     image: "postgres:17"
@@ -62,14 +115,9 @@ services:
       POSTGRES_USER: postgres_user
       POSTGRES_PASSWORD: pass123
       POSTGRES_DB: ecommerce
-
     restart: on-failure
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "pg_isready -d $POSTGRES_DB -U $POSTGRES_USER"
-        ]
+      test: ["CMD-SHELL", "pg_isready -d $POSTGRES_DB -U $POSTGRES_USER"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -90,4 +138,3 @@ services:
 volumes:
   pg17:
   redis-v:
-

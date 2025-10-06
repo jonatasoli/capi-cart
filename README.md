@@ -72,7 +72,7 @@ dokku apps:create admin-example
 Próximo passo é criar um banco de dados do postgres, redis e uma fila no rabbitmq e linka-lo a nossa API
 ```bash
 # postgres
-dokku apps:create db-example
+dokku postgres:create db-example
 dokku postgres:link db-example api-example
 
 # redis
@@ -106,7 +106,10 @@ Agora precisamos colocar as variáveis de ambiente nos projetos.
 dokku config:set api-example DYNACONF_ACCESS_TOKEN_EXPIRE_MINUTES=90 DYNACONF_ADMIN_URL=https://demo.admin.example.com DYNACONF_API_MAIL_URL=https://testapi.com/ DYNACONF_AWS_ACCESS_KEY_ID="xxxxxxx" DYNACONF_AWS_SECRET_ACCESS_KEY="xxxxxx" DYNACONF_BROKER_URL=amqp://example:xxxxxx@dokku-rabbitmq-staging:5672/example DYNACONF_BUCKET_NAME=cdn.example.com DYNACONF_COMPANY=Capivara DYNACONF_CORREIOSBR_API_SECRET="xxxxxxx" DYNACONF_CORREIOSBR_CEP_ORIGIN=1000000 DYNACONF_CORREIOSBR_PASS=usercorreios DYNACONF_CORREIOSBR_POSTAL_CART=000011111 DYNACONF_CORREIOSBR_USER="111111gr." DYNACONF_DATABASE_URI=postgresql+psycopg://postgres:xxxxx@dokku-postgres-example:5432/example DYNACONF_DATABASE_URL=postgresql+psycopg://postgres:xxxxx@dokku-postgres-example:5432/example DYNACONF_EMAIL_FROM=contact@jonatasoliveira.dev DYNACONF_ENDPOINT_UPLOAD_CLIENT=https://s3.us-east-2.wasabisys.com/ DYNACONF_ENDPOINT_UPLOAD_REGION=us-east-2 DYNACONF_ENVIRONMENT=production DYNACONF_FILE_UPLOAD_CLIENT=WASABI DYNACONF_FILE_UPLOAD_PATH=https://cdn.example.com/ DYNACONF_FRONTEND_URL=https://demo.capicart.com DYNACONF_FRONTEND_URLS=https://demo.capicart.com DYNACONF_GATEWAY_API=API_KEY DYNACONF_GATEWAY_CRYP=CRYP_KEY DYNACONF_MERCADO_PAGO_ACCESS_TOKEN=PROD-xxx-xxxx-xxx-xxxx DYNACONF_MERCADO_PAGO_PUBLIC_KEY=PROD-xxxxx-xxx-xx-xx-xxxx DYNACONF_MERCADO_PAGO_URL=https://api.mercadopago.com DYNACONF_PAYMENT_GATEWAY_URL=URL_GATEWAY DYNACONF_REDIS_DB=0 DYNACONF_REDIS_URL=redis://:xxxxx@dokku-redis-example:6379 DYNACONF_RESULT_BACKEND=rpc:// DYNACONF_SENDGRID_API_KEY="SG.xxx.xxxw-xxxxx" DYNACONF_SETRY_DSN=https://xxxx@o11111eee.ingest.sentry.io/ss12333 DYNACONF_STRIPE_API_KEY="pk_xxxxxxxl" DYNACONF_STRIPE_SECRET_KEY="sk_xxxxxxxxxx"
 
 #frontend
-dokku config:set front-example VITE_MERCADO_PAGO_PUBLIC_KEY="PROD-xxxxx-xxx-xxx-xxxx-xxxx" VITE_MERCADO_PAGO_ACCESS_TOKEN="PROD-xxxxx-xxxx-xxxx-xxxxxx" VITE_SERVER_BASE_URL=https://demo.api.capicart.com/docs
+dokku config:set front-example VITE_MERCADO_PAGO_PUBLIC_KEY="PROD-xxxxx-xxx-xxx-xxxx-xxxx" VITE_MERCADO_PAGO_ACCESS_TOKEN="PROD-xxxxx-xxxx-xxxx-xxxxxx" VITE_SERVER_BASE_URL=https://demo.api.capicart.com/docs WHATSAPP_NUMBER="+5511123456789" URL_LOGO="https://site.com/logo.svg" RECAPTCHA_KEY="xxxx" RECAPTCHA_SECRET_KEY="xxxxx" SENTRY_DSN="xxx" SENTRY_ENV="production" ALT_LOGO="logo" GTAG_ID="xxxxx"
+
+#admin
+dokku config:set admin-example SERVER_BASE_URL=https://api.api.com
 ```
 
 #### O que faz cada variável?
@@ -144,7 +147,7 @@ Agora é necessário definir a url e ativar o SSL:
 
 ```bash
 dokku domains:set api-example api.example.com
-dokku domains:set admin-example api.admin.example.com
+dokku domains:set admin-example admin.example.com
 dokku domains:set front-example example.com
 ```
 

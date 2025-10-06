@@ -110,6 +110,7 @@ dokku config:set front-example VITE_MERCADO_PAGO_PUBLIC_KEY="PROD-xxxxx-xxx-xxx-
 
 #admin
 dokku config:set admin-example SERVER_BASE_URL=https://api.api.com
+dokku docker-options:add admin-gattorosa build '--build-arg PUBLIC_SERVER_BASE_URL'
 ```
 
 #### O que faz cada variável?

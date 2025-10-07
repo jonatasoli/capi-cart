@@ -113,6 +113,11 @@ dokku config:set admin-example SERVER_BASE_URL=https://api.api.com
 dokku docker-options:add admin-gattorosa build '--build-arg PUBLIC_SERVER_BASE_URL'
 ```
 
+Adicionar o header:
+```bash
+dokku nginx:set api-example client-max-body-size 50m
+```
+
 #### O que faz cada variável?
 [WIP]
 

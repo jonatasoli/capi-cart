@@ -1,7 +1,5 @@
 services:
 
-  front:
-
   api:
     build: ./back
     ports:

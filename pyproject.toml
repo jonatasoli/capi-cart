@@ -12,6 +12,8 @@ dependencies = [
     "towncrier (>=24.8.0,<25.0.0)"
 ]
 
+[tool.poetry]
+package-mode = false
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
@@ -24,6 +26,8 @@ start_string = "<!-- release notes start -->\n"
 underlines = ["", "", ""]
 title_format = "## [{version}](https://github.com/twisted/my-project/tree/{version}) - {project_date}"
 issue_format = "[#{issue}](https://github.com/twisted/my-project/issues/{issue})"
+package = ""
+name = ""
 
 [[tool.towncrier.type]]
 directory = "security"

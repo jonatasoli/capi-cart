@@ -9,3 +9,15 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/) and the chang
 :: towncrier-draft - Don't released
 
 <!-- release notes start -->
+
+## [0.1.0](https://github.com/twisted/my-project/tree/0.1.0) - 2025-11-18
+
+### Added
+
+- Adicionado o docker-compose com a API funcionando
+- feat: Add docker-compose to backend
+- feat: Add docker-compose with infra
+
+### Doc
+
+- doc: Start documentation for deploy in dokku
